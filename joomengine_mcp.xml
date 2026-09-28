@@ -7,7 +7,7 @@
   <license>GNU General Public License version 3 or later; see LICENSE</license>
   <authorEmail>joomla@vdm.io</authorEmail>
   <authorUrl>https://dev.vdm.io</authorUrl>
-  <version>0.1.1</version>
+  <version>1.0.0</version>
   <description>PLG_WEBSERVICES_JOOMENGINE_MCP_DESCRIPTION</description>
   <namespace path="src">VDM\Plugin\Webservices\JoomEngineMcp</namespace>
   <scriptfile>script.php</scriptfile>
@@ -25,5 +25,5 @@
   <updateservers>
     <server type="extension" priority="1" name="JoomEngine MCP Web Services">https://raw.githubusercontent.com/joomengine/mcp_webservices/main/joomengine_mcp_update_server.xml</server>
   </updateservers>
-  <targetplatform name="joomla" version="6\.[1-9][0-9]*" />
+  <targetplatform name="joomla" version="6\.[1-9][0-9]*"/>
 </extension>

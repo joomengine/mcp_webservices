@@ -1,6 +1,6 @@
 # Changelog
 
-## [[[NEXT_VERSION]]]
+## 1.0.0
 
 ### Addition
 - Add a manual version release workflow and native plugin update feed, using Git User once and OctoShoom for SHA-512 hashes.
