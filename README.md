@@ -22,18 +22,44 @@ serves CORS preflight only; it exposes no catalogue data or execution.
 ## Changes and releases
 
 Record pending changes in [CHANGELOG.md](CHANGELOG.md) and
-[changelog.xml](changelog.xml) under `[[[NEXT_VERSION]]]`. To release a reviewed
-version, set the manifest version and creation date, replace that marker in both
-changelogs with the same version, commit the metadata, then create and push its
-`vX.Y.Z` Git tag. Do not move published tags. The next component package release
-will select this tag through OctoJPack's normal latest-tag selection.
+[changelog.xml](changelog.xml) under exactly one `[[[NEXT_VERSION]]]` section in
+each file. After a release, add a new pending section above the existing history
+when recording the next change.
 
-The Joomla package owns update delivery; this plugin does not maintain an
-independent update feed or package builder.
+Configure these repository Actions secrets for `octoleo/git-user@v2`:
+
+| Secret | Value |
+| --- | --- |
+| `GPG_KEY` | Private signing key |
+| `GPG_USER` | Signing key identity |
+| `SSH_KEY` | Private SSH key with push access to this repository |
+| `SSH_PUB` | Matching public SSH key |
+| `GIT_USER` | Git author name |
+| `GIT_EMAIL` | Git author email |
+
+The signing identity must be able to push release commits to `main` and create
+tags under the repository's branch and tag rules.
+
+After merging reviewed changes, open **Actions → Release webservices plugin with
+OctoShoom → Run workflow**, select `main`, and enter the desired stable `X.Y.Z`
+version (a leading `v` is accepted). The first release may use the manifest's
+current version; subsequent versions must increase. The workflow updates the
+manifest and both changelogs, commits them, creates `vX.Y.Z`, adds the tagged ZIP
+to [the plugin update feed](joomengine_mcp_update_server.xml), then runs OctoShoom
+to add its SHA-512. No manual tag push is needed. A tag push alone does not start
+the workflow. If publication or hashing fails, rerun the same version; published
+tags and existing update hashes are preserved.
+
+For the first combined package, complete this release and the console plugin's
+release before running the component's package release workflow. OctoJPack then
+selects the latest tag from each independent plugin repository. This repository
+also serves its own Joomla plugin updates; it does not build the combined package.
 
 ## Verification
 
-The CI workflow checks PHP syntax and installable manifest contents. Installed
+The CI workflow checks PHP syntax, installable manifest contents, and release
+metadata for first releases, later releases and retries. Run the metadata checks
+locally with `php tests/release.php`. Installed
 Joomla routing, fresh-install enablement and preservation of disabled state are
 verified by the integration workflow in `joomengine/mcp_component`, which installs
 this repository as a separate plugin.

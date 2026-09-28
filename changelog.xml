@@ -4,6 +4,9 @@
     <element>plg_webservices_joomengine_mcp</element>
     <type>plugin</type>
     <version>[[[NEXT_VERSION]]]</version>
+    <addition>
+      <item>Add a manual version release workflow and native plugin update feed, using Git User once and OctoShoom for SHA-512 hashes.</item>
+    </addition>
     <change>
       <item>Move the webservices plugin from the component into its own directly installable repository, included independently by OctoJPack.</item>
     </change>
@@ -12,7 +15,7 @@
       <item>Enable fresh plugin installations while preserving an administrator's disabled state on updates.</item>
     </fix>
     <note>
-      <item>Joomla package releases deliver updates for this plugin together with the component and console plugin.</item>
+      <item>Release both independent plugins before the component's first package release; OctoJPack includes their latest tags.</item>
     </note>
   </changelog>
 </changelogs>
