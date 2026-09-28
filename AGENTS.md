@@ -20,11 +20,18 @@
   `fix`, `language`, `addition`, `change`, `remove` and `note`, with XML `item`
   children and matching Markdown headings. XML identity is
   `plg_webservices_joomengine_mcp` / `plugin`.
-- Before a reviewed release, set the manifest version and creation date and
-  freeze both pending changelogs to that version. A `vX.Y.Z` tag makes that source
-  available to OctoJPack. Never move a published tag or run a release without the
-  maintainer's instruction. Package update delivery belongs to the combined
-  package; keep the plugin changelog URL pointed at this repository's raw XML.
-- Work on a branch and open a pull request. Check syntax and manifest contents.
+- Release through the manual `release.yml` workflow on `main`, with a stable
+  version input. It freezes the manifest/date and pending changelogs, publishes
+  the immutable `vX.Y.Z` tag, adds its download to this plugin's update feed, then
+  calls `octoleo/octoshoom@master`. Configure Git once with `octoleo/git-user@v2`;
+  keep repository and raw XML URLs concrete. Never move a published tag or run
+  a release without the maintainer's instruction. OctoJPack selects the tag when
+  the component's separate package workflow runs. Do not add packaging here.
+- Keep unreleased update feeds empty. Only the release workflow adds a tagged
+  download; OctoShoom owns checksum generation. The local metadata helper must
+  only edit the manifest, changelogs and update feed. Preserve older feed entries
+  and their hashes, and allow retries of the current published version.
+- Work on a branch and open a pull request. Check syntax, manifest contents and
+  first-release, successive-release and retry metadata transitions.
   Coordinate installed Joomla tests through the component's integration workflow;
   do not copy its integration harness into this repository.

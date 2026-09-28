@@ -15,7 +15,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
-          extensions: simplexml
+          extensions: dom, simplexml
           coverage: none
       - name: Check PHP and installable manifest
         run: |
@@ -23,7 +23,7 @@ jobs:
           php <<'PHP'
           <?php
           $manifest = simplexml_load_file('joomengine_mcp.xml');
-          if (!$manifest || !simplexml_load_file('changelog.xml')) {
+          if ($manifest === false || simplexml_load_file('changelog.xml') === false || simplexml_load_file('joomengine_mcp_update_server.xml') === false) {
               throw new RuntimeException('Invalid XML metadata.');
           }
           foreach ($manifest->files->children() as $file) {
@@ -35,3 +35,5 @@ jobs:
               throw new RuntimeException('Missing installer script.');
           }
           PHP
+      - name: Check release metadata transitions
+        run: php tests/release.php
