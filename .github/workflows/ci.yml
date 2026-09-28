@@ -1,0 +1,37 @@
+name: Plugin checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: simplexml
+          coverage: none
+      - name: Check PHP and installable manifest
+        run: |
+          git ls-files -z '*.php' | xargs -0 -r -n1 php -l
+          php <<'PHP'
+          <?php
+          $manifest = simplexml_load_file('joomengine_mcp.xml');
+          if (!$manifest || !simplexml_load_file('changelog.xml')) {
+              throw new RuntimeException('Invalid XML metadata.');
+          }
+          foreach ($manifest->files->children() as $file) {
+              if (!file_exists((string) $file)) {
+                  throw new RuntimeException('Missing manifest file: ' . $file);
+              }
+          }
+          if (!is_file((string) $manifest->scriptfile)) {
+              throw new RuntimeException('Missing installer script.');
+          }
+          PHP

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelogs>
+  <changelog>
+    <element>plg_webservices_joomengine_mcp</element>
+    <type>plugin</type>
+    <version>[[[NEXT_VERSION]]]</version>
+    <change>
+      <item>Move the webservices plugin from the component into its own directly installable repository, included independently by OctoJPack.</item>
+    </change>
+    <fix>
+      <item>Register no MCP API routes when the component is absent or disabled.</item>
+      <item>Enable fresh plugin installations while preserving an administrator's disabled state on updates.</item>
+    </fix>
+    <note>
+      <item>Joomla package releases deliver updates for this plugin together with the component and console plugin.</item>
+    </note>
+  </changelog>
+</changelogs>
