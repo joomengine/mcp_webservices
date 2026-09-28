@@ -1,0 +1,66 @@
+name: Release webservices plugin with OctoShoom
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (for example 1.2.3 or v1.2.3)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: joomla-extension-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Setup Git User
+        uses: octoleo/git-user@v2
+        with:
+          gpg-key: ${{ secrets.GPG_KEY }}
+          gpg-user: ${{ secrets.GPG_USER }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ssh-pub: ${{ secrets.SSH_PUB }}
+          git-user: ${{ secrets.GIT_USER }}
+          git-email: ${{ secrets.GIT_EMAIL }}
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: dom
+          coverage: none
+      - name: Publish the version and Joomla update entry
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          version="${VERSION#v}"
+          tag="v$version"
+          git remote set-url origin git@github.com:joomengine/mcp_webservices.git
+          if ! git show-ref --verify --quiet "refs/tags/$tag"; then
+            php tools/release.php prepare "$version"
+            git add joomengine_mcp.xml CHANGELOG.md changelog.xml
+            git commit -m "Release $tag"
+            git tag -a "$tag" -m "Release $tag"
+            git push --atomic origin HEAD:main "refs/tags/$tag"
+          fi
+          php tools/release.php feed "$version"
+          git add joomengine_mcp_update_server.xml
+          if ! git diff --cached --quiet; then
+            git commit -m "Add $tag to the Joomla update server"
+            git push origin HEAD:main
+          fi
+      - name: Update hashes
+        uses: octoleo/octoshoom@master
+        with:
+          config-json: |
+            {"update_servers":[{"owner":"joomengine","repo":"mcp_webservices","branch":"main","path":"joomengine_mcp_update_server.xml"}]}
