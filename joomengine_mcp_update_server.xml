@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- The release workflow adds a tagged download; OctoShoom then adds its SHA-512. -->
 <updates>
-  <update>
-    <name>JoomEngine MCP Web Services</name>
-    <description>JoomEngine MCP webservices plugin.</description>
-    <element>joomengine_mcp</element>
-    <type>plugin</type>
-    <version>1.0.0</version>
-    <folder>webservices</folder>
-    <client>site</client>
-    <downloads><downloadurl type="full" format="zip">https://github.com/joomengine/mcp_webservices/archive/refs/tags/v1.0.0.zip</downloadurl></downloads>
-    <tags><tag>stable</tag></tags>
-    <targetplatform name="joomla" version="6\.[1-9][0-9]*"></targetplatform>
-    <php_minimum>8.3.0</php_minimum>
-    <infourl>https://github.com/joomengine/mcp_webservices/tree/v1.0.0</infourl>
-    <changelogurl>https://raw.githubusercontent.com/joomengine/mcp_webservices/main/changelog.xml</changelogurl>
-  </update>
+	<update>
+		<name>JoomEngine MCP Web Services</name>
+		<description>JoomEngine MCP webservices plugin.</description>
+		<element>joomengine_mcp</element>
+		<type>plugin</type>
+		<version>1.0.0</version>
+		<folder>webservices</folder>
+		<client>site</client>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/joomengine/mcp_webservices/archive/refs/tags/v1.0.0.zip</downloadurl>
+		</downloads>
+		<tags>
+			<tag>stable</tag>
+		</tags>
+		<targetplatform name="joomla" version="6\.[1-9][0-9]*"/>
+		<php_minimum>8.3.0</php_minimum>
+		<infourl>https://github.com/joomengine/mcp_webservices/tree/v1.0.0</infourl>
+		<changelogurl>https://raw.githubusercontent.com/joomengine/mcp_webservices/main/changelog.xml</changelogurl>
+		<sha512>49901a374cb19eccd1fbcf6a0ba836ba5dfb97358f9b435a66d69246d92e322edd984ece3093d6b0a1999af1c79ba6011a3c093863105c955f25c41036ecff05</sha512>
+	</update>
 </updates>
