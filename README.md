@@ -4,15 +4,22 @@ Native Joomla webservices plugin for the authenticated JoomEngine MCP endpoint
 at `/api/index.php/v1/joomengine-mcp`. Requires Joomla 6.1–6.x, PHP 8.3 or later
 and the enabled [MCP component](https://github.com/joomengine/mcp_component).
 
-Install the combined extension from
-[joomengine/mcp_package](https://github.com/joomengine/mcp_package).
-OctoJPack reads the component repository's `.octojpack`, selects the latest
-tag of each extension and builds the Joomla package in that separate repository.
-This repository contains only the webservices plugin.
+## Install and connect
 
-The source ZIP from this repository is also directly installable in Joomla.
-No Composer run or build step is required. A fresh installation enables the
-plugin. Updates preserve its enabled or disabled state. Without the enabled
+1. Download the source ZIP for the latest [published MCP package tag](https://github.com/joomengine/mcp_package/tags) and upload it through Joomla's **System → Install → Extensions**. The tagged package ZIP installs the MCP component, this webservices plugin and the [console plugin](https://github.com/joomengine/mcp_plugin) together.
+2. Check that the component and both plugins are enabled. Plugins are listed under **System → Manage → Plugins**. Fresh plugin installations are enabled automatically; updates preserve the administrator's enabled or disabled state.
+3. Follow the [getting started guide](https://github.com/joomengine/mcp_component/blob/main/docs/GETTING-STARTED.md) for server configuration and a Joomla API token, then the [client connection guide](https://github.com/joomengine/mcp_component/blob/main/docs/CLIENT-CONNECTIONS.md) to connect an AI application or use MCP tools directly.
+
+The separate [MCP client](https://github.com/joomengine/mcp_client/blob/main/README.md) runs on your workstation or in a PHP project and connects to this endpoint over HTTPS. Its remote stdio bridge lets compatible AI applications use the server; its PHP API can discover and call MCP tools without an AI application. Remote connections always retain the Joomla token user's permissions. The console plugin instead supplies direct local Joomla console access.
+
+OctoJPack reads the component repository's `.octojpack`, selects the latest
+tag of each extension and builds the Joomla package in its separate repository.
+This repository contains only the thin webservices route adapter; the component
+owns MCP protocol handling, the catalogue and execution.
+
+For maintainers installing extensions independently, this repository's source
+ZIP is directly installable after the compatible component. No Composer run or
+build step is required. Without the enabled
 component, the plugin registers no routes. Component removal does not remove
 this independent extension; use Joomla's extension manager to uninstall it.
 

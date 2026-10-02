@@ -1,5 +1,11 @@
 # Changelog
 
+## [[[NEXT_VERSION]]]
+
+### Change
+
+- Document combined-package installation and link the canonical server setup, AI connection and direct client guides.
+
 ## 1.0.0
 
 ### Addition

@@ -3,6 +3,14 @@
   <changelog>
     <element>plg_webservices_joomengine_mcp</element>
     <type>plugin</type>
+    <version>[[[NEXT_VERSION]]]</version>
+    <change>
+      <item>Document combined-package installation and link the canonical server setup, AI connection and direct client guides.</item>
+    </change>
+  </changelog>
+  <changelog>
+    <element>plg_webservices_joomengine_mcp</element>
+    <type>plugin</type>
     <version>1.0.0</version>
     <addition>
       <item>Add a manual version release workflow and native plugin update feed, using Git User once and OctoShoom for SHA-512 hashes.</item>
